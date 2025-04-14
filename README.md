@@ -89,8 +89,11 @@ python_requires='>=3.6'
  [https://www.eksimracing.org/zcube-developer-kit/]()
 
 ### License:
+All lite modules: 'CC BY-NC 4.0', Free for non-commercial use 
+https://creativecommons.org/licenses/by-nc/4.0/
 
- https://www.eksimracing.org/terms-conditions
+All full modules: EULA, personal & commercial license agreement
+https://www.eksimracing.org/terms-conditions
 
 DISCLAIMER: 
 
