@@ -64,6 +64,25 @@ SLI-FTEC (Fanatec Conversion Kit): z3sliftec and z3sliftec_lite
 - Run the script directly to test available features
 
 Note: Some features are not available in the Lite version.
+  
+##### Classifiers
+        'Development Status :: 5 - Production/Stable',
+        'Operating System :: Microsoft :: Windows',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Education',
+        'Topic :: Games/Entertainment',
+        'Topic :: Scientific/Engineering',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: End Users/Desktop',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12'
+python_requires='>=3.6'
 
 ### Read Doc / API for more info:
 
