@@ -10,7 +10,7 @@ https://www.eksimracing.org
 							-- 2025.04.03: created - Zappadoc    
 
 zCube (z3 engine) developer kit for Python interacts with Leo bodnar SLI (Shift-Lights Interface) USB devices (SLI-F1, SLI-PRO, SLI-M and SLI-FTEC) using Python script.
-The kit includes a Full (EULA) and Lite (free non-commercial) module versions for each device.
+The kit includes a Full (EULA) and Lite (free non-commercial) module versions for each device. The modules are compiled and optimized C++ extensions, packaged as .whl files for Python integration.
 
 Note: Some features are not available in the Lite version.
 
