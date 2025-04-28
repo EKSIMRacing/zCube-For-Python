@@ -78,10 +78,8 @@ if dev.init(*z3setup(com=4, stroke=200)):
     print(f"Version: {z3vers}")
 
     # SCN actuator 100mm
-    max_stroke = 200
+    max_stroke = 100
     pos_center = max_stroke / 2
-    # pos_min_safe = 50
-    # pos_max_safe = 70
 
     # go home position
     dev.go_home()
@@ -101,13 +99,13 @@ if dev.init(*z3setup(com=4, stroke=200)):
     repetitions = 2   # cycles
 
     # key pos.
-    low_rest = 40
-    low_min = 40
-    low_max = 70
+    low_rest = 20
+    low_min = 20
+    low_max = 40
 
-    high_rest = 140
-    high_min = 140
-    high_max = 180
+    high_rest = 70
+    high_min = 70
+    high_max = 90
 
     for cycle in range(repetitions):
             print(f"\n--- Cycle {cycle+1} ---")
