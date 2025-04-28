@@ -43,9 +43,8 @@ associated with it are subject to change without notice.*
 
 https://www.eksimracing.org/terms-conditions
 
-================================================================
-EKSIMRACING TERMS AND CONDITIONS (ABSTRACT):
-================================================================
+
+### EKSIMRACING TERMS AND CONDITIONS (ABSTRACT):
 
 z3scn Module part of zCube Python Developer Kit for Dyadic System SCN5 and SCN6 Actuators
 Copyright ©2022-2025 by Zappadoc – All rights reserved.
