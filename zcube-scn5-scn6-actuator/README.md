@@ -1,13 +1,15 @@
-﻿# 
+#
 
 ##### zCube (z3scn) Developer Kit For Python
 
-Copyright (c)2025 by Zappadoc - All Rights Reserved. 
+Copyright (c)2025 by Zappadoc - All Rights Reserved.
 
 https://www.eksimracing.org
 
-            Change history: 
-                            -- 2025.04.23: created - Zappadoc    
+```
+        Change history: 
+                        -- 2025.04.23: created - Zappadoc    
+```
 
 zCube (z3scn) developer kit for Python interacts with electric linear actuator from Dyadic System (SCN5 and SCN6) using Python script.
 
@@ -20,7 +22,7 @@ SCN Actuators: z3scn and z3scnpro (contact us for the pro version, available on 
 - very easy to use API
 - Device initialization and capability detection including a full setup of com port, stroke, speed, acceleration and power gain.
 - move home and center functions
-- accurate and fast positionning 
+- accurate and fast positioning
 - Alarm checking
 - optional functions are available in PRO version, contact us
 
@@ -35,11 +37,11 @@ associated with it are subject to change without notice.*
 
 ### Read Doc / API for more info:
 
- [https://www.eksimracing.org/zcube-developer-kit/]()
+[https://www.eksimracing.org/zcube-developer-kit/]()
 
 ### License:
 
- https://www.eksimracing.org/terms-conditions
+https://www.eksimracing.org/terms-conditions
 
 ================================================================
 EKSIMRACING TERMS AND CONDITIONS (ABSTRACT):
@@ -48,8 +50,6 @@ EKSIMRACING TERMS AND CONDITIONS (ABSTRACT):
 z3scn Module part of zCube Python Developer Kit for Dyadic System SCN5 and SCN6 Actuators
 Copyright ©2022-2025 by Zappadoc – All rights reserved.
 Published by EKSIMRacing Foundation
-
-
 
 #### PERSONAL & COMMERCIAL LICENSE AGREEMENT (ABSTRACT)
 
@@ -132,72 +132,65 @@ https://www.eksimracing.org/terms-conditions
 ## Usage Example
 
 ```python
-"""
-# #####################################################################
-
-sample script to test ZCube API for SCN5 and SCN6 actutators 
-z3scn Python extension module 
-Copyright (c)2022-2025 by Zappadoc - All Rights Reserved.
-https://www.eksimracing.org
-
-This source code, module, lib and all information, data, and algorithms
-associated with it are subject to change without notice.
-
-Change history: 
-               -- 2025.04.23: created - Zappadoc    
-
-This example shows how to interact with Leo bodnar USB device using the Python.
-Both the Full and Lite versions are supported.
-
-Read the zCube Doc / API for more info:
-https://www.eksimracing.org/zcube-developer-kit/
-
-License:
-https://www.eksimracing.org/terms-conditions
-
-================================================================
-EKSIMRACING TERMS AND CONDITIONS (ABSTRACT):
-================================================================
-
-By using our software you agree to these terms and conditions below
-
-DISCLAIMER:
-EKSIMRACING IS A SOFTWARE COMPANY IN NO EVENT SHALL EKSIMRacing OWNER
-OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES OF YOUR HARDWARE.
-
-YOU MUST READ AND RESPECT THE HEALTH AND SAFETY PRECAUTIONS INCLUDED
-WITH YOUR SIMULATOR MACHINE.
-
-YOU FULLY UNDERSTAND: CAR RACING SIMULATOR INVOLVE RISKS AND DANGERS
-OF SERIOUS BODILY INJURY, INCLUDING PERMANENT DISABILITY, PARALYSIS,
-AND POSSIBLY DEATH.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS”
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-OR BUSINESS INTERRUPTION; OR PERMANENT DISABILITY; OR PARALYSIS;
-OR POSSIBLY DEATH) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-THE POSSIBILITY OF SUCH DAMAGE.
-
-By using our software you agree to these terms and conditions.
-
-(These terms and conditions are subject to change without notice)
-
-All product names are trademarks or registered trademarks of their respective holders.
-
-# #####################################################################
-"""
 
 import z3scn as dev
 import time
 import math
+
+def z3setup(**kwargs) -> list[int]:
+    """
+    Prepare ordered and validated actuator initialization parameters.
+
+    Parameters (all optional except 'com'):
+        com (int): Required. COM port number (e.g., 3 for COM4).
+        id (int): Device ID (default 0).
+        stroke (int): Stroke length (default 100, only 50, 150, or 200 are valid; others become 100).
+        accel (int): Acceleration value (default 200).
+        gain (int): Control gain (default 7).
+        normalSpd (int): Normal movement speed (default 7800).
+        homeSpd (int): Homing speed (default 2000).
+        moveMode (int): Movement mode (default 0).
+        gohome (int): Whether to go home on init (default 0).
+        gocenter (int): Whether to go center after home (default 0).
+        diag (int): Diagnostic flag (default 0).
+
+    Returns:
+        list[int]: A list of parameters ready to be unpacked into the init() function.
+
+    Raises:
+        ValueError: If 'com' is missing or unknown parameters are passed.
+
+    Example:
+        params = z3setup(com=4, accel=385)
+        dev.init(*params)
+    """
+    param_order = ["com", "id", "stroke", "accel", "gain", "normalSpd", "homeSpd", "moveMode", "gohome", "gocenter", "diag"]
+    defaults = {
+        "id": 0, "stroke": 100, "accel": 200, "gain": 7,
+        "normalSpd": 7800, "homeSpd": 2000, "moveMode": 0,
+        "gohome": 0, "gocenter": 0, "diag": 0
+    }
+    stroke_valid = {50, 150, 200}
+
+    allowed_keys = set(param_order)
+    for key in kwargs:
+        if key not in allowed_keys:
+            raise ValueError(f"Unknown parameter '{key}'. Allowed parameters are: {', '.join(param_order)}")
+
+    if "com" not in kwargs:
+        raise ValueError("Parameter 'com' is required")
+
+    stroke = kwargs.get("stroke", 100)
+    kwargs["stroke"] = stroke if stroke in stroke_valid else 100
+
+    args = [kwargs.get(k, defaults.get(k)) for k in param_order]
+
+    while len(args) > 1 and args[-1] == defaults.get(param_order[len(args)-1]):
+        args.pop()
+
+    # print(f"[DEBUG] Prepared args: {args}")
+    return args
+
 
 # smooth filter
 def smooth_path(start, end, steps):
@@ -212,18 +205,18 @@ def frange(start, stop, step):
         yield start
         start += step
 
-# init scn with COM Port 4 and default parameters
-if dev.init(4):
+# init scn with COM Port 4 and default parameters (stroke = 100)
+if dev.init(*z3setup(com=4, stroke=200)):
     print("Start Testing...")
 
     z3vers = dev.get_device_info("version")
     print(f"Version: {z3vers}")
 
     # SCN actuator 100mm
-    max_stroke = 100
+    max_stroke = 200
     pos_center = max_stroke / 2
-    pos_min_safe = 50
-    pos_max_safe = 70
+    # pos_min_safe = 50
+    # pos_max_safe = 70
 
     # go home position
     dev.go_home()
@@ -243,13 +236,13 @@ if dev.init(4):
     repetitions = 2   # cycles
 
     # key pos.
-    low_rest = 20
-    low_min = 20
-    low_max = 40
+    low_rest = 40
+    low_min = 40
+    low_max = 70
 
-    high_rest = 70
-    high_min = 70
-    high_max = 90
+    high_rest = 140
+    high_min = 140
+    high_max = 180
 
     for cycle in range(repetitions):
             print(f"\n--- Cycle {cycle+1} ---")
