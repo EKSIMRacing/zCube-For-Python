@@ -1,256 +1,110 @@
-# zCube For Python API
+# 
 
-zCube (z3 Engine) Developer Kit For Python 
+##### zCube (z3 Engine) Developer Kit For Python
+
 Copyright (c)2025 by Zappadoc - All Rights Reserved. 
 
 https://www.eksimracing.org
 
+			Change history: 
+							-- 2025.04.03: created - Zappadoc    
 
+zCube (z3 engine) developer kit for Python interacts with Leo bodnar SLI (Shift-Lights Interface) USB devices (SLI-F1, SLI-PRO, SLI-M and SLI-FTEC) using Python script.
+The kit includes a Full (EULA) and Lite (free non-commercial) module versions for each device. The modules are compiled and optimized C++ extensions, packaged as .whl files for Python integration.
 
-## Initialization
+Note: Some features are not available in the Lite version.
 
-### z3engine() and init() functions
 
-**z3engine**() create an instance
-**init**() initializes the device extension.
 
-```python
-import z3slipro as device
-slipro = device.z3engine()
-slipro.init()
-```
+### Main Features:
 
-### Example: Initialize the SLI-PRO device (z3slipro device extension)
+- Device initialization and capability detection
+- Input polling (Full version only)
+- LED control (RPM, Warning)
+- External LED control (Full version only)
+- Display panel (3, 4, or 6 digits) control (limited charset in lite version)
+- Gear indicator (limited charset in lite version)
+- Brightness control (Full version)
+- rumble motor on Bodnar Conversion kit - SLI-FTEC device (Full version)
 
-```python
-# Load device extension and create the slipro instance
-import z3slipro as device
-slipro = device.z3engine()
+### To use:
 
-# Initialize slipro device
-if slipro.init():
+- Plug in your device
+- Choose either the Lite or Full version of the module to install
+- Run the script directly to test available features
 
-    # Your script here
+*This source code, module, lib and all information, data, and algorithms
+associated with it are subject to change without notice.*
 
-    # End of script
-    slipro.terminate()
-```
+### zCube (z3) Extensions:
 
-### terminate() function
+SLI-PRO: z3slipro and z3slipro_lite
 
-Use **terminate()** when you no longer need the extension, just before quitting or at the end of the script.
-This function closes the Win32 [COM library](https://docs.microsoft.com/en-us/windows/win32/com/the-com-library),
-stops listening for inputs, and unloads all services loaded by the extension if needed.
-It is mandatory to call it with the z3slipro device extension to clean up the COM library.
+SLI-F1: z3slif1 and z3slif1_lite
 
-```python
-# End of script
-slipro.terminate()
-```
+SLI-M: z3slim and z3slim_lite
 
-### get_device_info(selector) function
+SLI-FTEC (Fanatec Conversion Kit): z3sliftec and z3sliftec_lite
 
-Get device information and capabilities.
+##### Main Features:
 
-```python
-# SELECTOR STRING
+- Device initialization and capability detection
+- Input polling (full version only)
+- LED control (RPM, Warning/FLAG)
+- External LED control (full version only)
+- Display panel (3, 4, or 6 digits) control (limited charset in lite version)
+- Gear indicator (limited charset in lite version)
+- Brightness control (full version)
+- Rumble motors on Bodnar Conversion kit - SLI-FTEC device (full version)
 
-# "version" - Returns the version as a string
-version = slipro.get_device_info("version")
+##### To use:
 
-# "name" - Returns the name of the extension as a string
-device_name = slipro.get_device_info("name")
+- Plug in your device
+- Choose either the Lite or Full version of the module
+- Run the script directly to test available features
 
-# "type" - Returns the class number of the device
-class_num = slipro.get_device_info("type")
+Note: Some features are not available in the Lite version.
+  
+##### Classifiers
+        'Development Status :: 5 - Production/Stable',
+        'Operating System :: Microsoft :: Windows',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Education',
+        'Topic :: Games/Entertainment',
+        'Topic :: Scientific/Engineering',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: End Users/Desktop',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12'
+python_requires='>=3.6'
 
-# "vendor id" - return device USB vendor ID
-dev_vendid = slipro.get_device_info("vendor id")
+### Read Doc / API for more info:
 
-# "product id" - return device USB product ID
-dev_prodid = slipro.get_device_info("product id")
+ [https://www.eksimracing.org/zcube-developer-kit/]()
 
-# usb device path
-dev_path = dev.get_device_info("device path")
+### License:
+All lite modules: 'CC BY-NC 4.0', Free for non-commercial use 
+https://creativecommons.org/licenses/by-nc/4.0/
 
-# device serial number
-dev_sn = dev.get_device_info("serial number"
+All full modules: EULA, personal & commercial license agreement
+https://www.eksimracing.org/terms-conditions
 
-# DEVICE CAPABILITIES
+DISCLAIMER: 
 
-# "digital" - return the max number of buttons
-btns = slipro.get_device_info("digital")
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# "analog" - return the max number of switches
-sw = slipro.get_device_info("analog")
+*All product names are trademarks or registered trademarks of their respective holders.*
 
-# "panel count" - Returns the number of digit panels supported (0, 1, or 2)
-max_panels = slipro.get_device_info("panel count")
 
-# "digits" - Returns the number of digits in each panel (6, 4, or 3, 0 if not supported)
-num_digits = slipro.get_device_info("digits")
 
-# "gear" - Returns 1 if a central gear digit is present, otherwise 0
-is_gear_present = slipro.get_device_info("gear")
 
-# "max rpm led" - Returns the max number of RPM LEDs allowed (0 if not supported)
-max_rpm_leds = slipro.get_device_info("max rpm led")
-
-# "max warning led" - Returns the max number of warning LEDs allowed (0 if not supported)
-max_warn_leds = slipro.get_device_info("max warning led")
-
-# "max external led" - Returns the max number of external LEDs allowed (0 if not supported)
-max_ext_leds = slipro.get_device_info("max external led")
-
-# "rumble motor" = return the number of rumble motors in SLI-FTEC (Fanatec Conversion Kit)
-max_rumble_motor = slipro.get_device_info("rumble motor")
-```
-
-### set_gear(value, show_dot=False) function
-
-Sets the central gear indicator (limited charset in lite version). 
-The first parameter can be a string, char, or number. The optional second parameter (boolean) determines whether to display the dot.
-
-```python
-slipro.set_gear(2)
-slipro.set_gear("3")
-# Show dot
-slipro.set_gear(6, True)
-```
-
-### set_left_panel(text) function
-
-Sets text in the left digit panel (limited charset in lite version). 
-Use `get_device_info("panel count")` and `get_device_info("digits")` to get the panel capabilities of your device.
-
-```python
-# Example setting panel text
-slipro.set_left_panel("  Pit ") # text
-device.set_left_panel(f"{speed:03d}   ")
-```
-
-### set_central_panel(text) function (SLI-FTEC only)
-
-Sets text in the central digit panel (limited charset in lite version). 
-Use `get_device_info("panel count")` and `get_device_info("digits")` to get the panel capabilities of your device.
-
-```python
-# Example setting panel text
-slipro.set_central_panel("  Pit ") # text
-device.set_central_panel(f"{speed:03d}   ")
-```
-
-### set_right_panel(text) function
-
-Same as `set_left_panel()`, but for the right panel (limited charset in lite version).
-
-```python
-slipro.set_right_panel(f" {rpm:5.0f}")
-slipro.set_right_panel("--Z3--") # text
-slipro.set_right_panel("1:02.420") # lap
-```
-
-### set_rpm_led(index, state) function
-
-Toggles the state of an RPM LED. The first parameter is the LED index, and the second is the state (0 = OFF, 1 = ON).
-
-```python
-# Example toggling RPM LEDs
-for i in range(1, max_rpm_leds + 1):
-    slipro.set_rpm_led(i, 1)  # Turn on
-    slipro.show_me()
-    sleep(0.05)
-
-for i in range(max_rpm_leds, 0, -1):
-    slipro.set_rpm_led(i, 0)  # Turn off
-    slipro.show_me()
-    sleep(0.05)
-```
-
-### set_warning_led(index, state) function
-
-Toggles the state of a warning (marshal) LED. The first parameter is the LED index, and the second is the state (0 = OFF, 1 = ON).
-
-```python
-if slipro.get_device_info("max warning led") >= 6:
-    slipro.set_warning_led(1, 1)  # Turn on
-    slipro.set_warning_led(6, 1)
-    slipro.show_me()
-
-    sleep(1)
-
-    slipro.set_warning_led(1, 0)  # Turn off
-    slipro.set_warning_led(6, 0)
-    slipro.show_me()
-```
-
-### set_external_led(index, state) function
-
-Toggles the state of a external (opional) LED. The first parameter is the LED index, and the second is the state (0 = OFF, 1 = ON - Full Version Only).
-
-```python
-if slipro.get_device_info("max external led") > 0:
-    slipro.set_external_led(1, 1)  # Turn on
-    slipro.set_external_led(3, 1)
-    slipro.show_me()
-
-    sleep(1)
-
-    slipro.set_external_led(1, 0)  # Turn off
-    slipro.set_external_led(3, 0)
-    slipro.show_me()
-```
-
-### show_me() function
-
-Shows the result onto your device (sends the USB report).
-
-```python
-for i in range(1, 6):
-    slipro.set_warning_led(i, 0)
-    slipro.show_me()
-    sleep(0.2)
-```
-
-### set_brightness(value) function
-
-Sets the brightness of the device (LEDs and digits - Full Version Only).
-
-```python
-max_brightness = slipro.get_device_info("brightness")
-if max_brightness >= 100:
-    slipro.set_brightness(100)
-```
-
-### start_input_listener() function
-
-Starts the control input (button or axis) detection of the device (Full Version Only).
-
-```python
-slipro.start_input_listener()
-```
-
-### stop_input_listener() function
-
-Stops the detection of control input (button or axis - Full Version Only).
-
-```python
-slipro.stop_input_listener()
-```
-
-### get_input_data() function
-
-Retrieves button press or axis value information (Full Version Only).
-
-```python
-# Example reading input data
-device_type, ctrl_type, ctrl_index, value, is_new = slipro.get_input_data()
-if is_new:
-    print(device_type, ctrl_type, ctrl_index, value, is_new)
-```
-
-### zCube SLI-PRO Full Example
-
+## Usage Example
 ```python
 """
 # #####################################################################
@@ -769,5 +623,3 @@ if __name__ == "__main__":
     main()
 
 ```
-
-Ensure to call `terminate()` at the end of your script to properly clean up resources.
