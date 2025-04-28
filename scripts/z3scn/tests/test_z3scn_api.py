@@ -71,7 +71,7 @@ def frange(start, stop, step):
         start += step
 
 # init scn with COM Port 4 and default parameters (stroke = 100)
-if dev.init(*z3setup(com=4, stroke=200)):
+if dev.init(*z3setup(com=4)):
     print("Start Testing...")
 
     z3vers = dev.get_device_info("version")
